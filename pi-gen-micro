@@ -252,7 +252,7 @@ nameserver 8.8.4.4
     ln -s /lib/systemd/system/systemd-networkd-wait-online.service build/etc/systemd/system/network-online.target.wants/systemd-networkd-wait-online.service
 
     # Add timesync service - necessary for using ca-certificates
-    apt_install ntpdate
+    cp "${PREBUILTS_DIR}"/sync_time.sh build/sbin
     cp "${PREBUILTS_DIR}"/sync-network-time.service build/etc/systemd/system/sync-network-time.service
     ln -s /etc/systemd/system/sync-network-time.service build/etc/systemd/system/multi-user.target.wants/sync-network-time.service
   else
@@ -297,12 +297,13 @@ then
   ExecStart=-/sbin/agetty -o '-p -f -- \\\\u' --noclear --autologin root %I \$TERM
   TTYVTDisallocate=no
   " > build/etc/systemd/system/getty@tty1.service.d/autologin.conf
-  echo "root:x:0:0:root:/root:/bin/sh" > build/etc/passwd
 
   sed --in-place '
   s/\(--keep-baud\)/--noclear --autologin root \1/' \
     build/etc/systemd/system/serial-getty@.service
 fi
+
+sudo sed -i 's:/bin/bash:/bin/sh:g' build/etc/passwd
 # Ensure compressed modules can be loaded (busybox implementation of modprobe
 # is insufficient)
 dpkg_unpack kmod

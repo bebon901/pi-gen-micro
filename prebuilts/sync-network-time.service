@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/sbin/ntpdate pool.ntp.org
+ExecStart=/sbin/sync_time.sh
 Restart=never
 
 [Install]
