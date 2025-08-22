@@ -1,2 +1,6 @@
 KERNEL_BIT_SIZE=64
 USES_CUSTOM_LOGO=1
+KERNEL_MODULES_DIR=/home/benbenson/mountpoint/compiled_modules/
+HAS_CUSTOM_KERNEL=1
+CUSTOM_KERNEL_VERSION_STR="6.12.40-v8+"
+CUSTOM_KERNEL_PATH=/home/benbenson/splash-screen-project/compiled_kernel/Image.gz
